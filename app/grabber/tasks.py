@@ -29,8 +29,10 @@ def get_sheet():
     # строки без названий колонок
     items = sheet['values'][1:]
 
-    for item in items:
+    # очистим таблицу
+    Order.objects.all().delete()
 
+    for item in items:
         google_id, order_number, price_us, will_arrive = item
         Order(
             google_id=int(google_id),

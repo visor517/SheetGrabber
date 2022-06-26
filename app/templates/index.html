@@ -26,7 +26,8 @@
                     <tr>
                         <th scope="col">№</th>
                         <th scope="col">заказ №</th>
-                        <th scope="col">стоимость,$</th>
+                        <th scope="col">стоимость, $</th>
+                        <th scope="col">стоимость, руб.</th>
                         <th scope="col">срок поставки</th>
                     </tr>
                 </thead>
@@ -36,6 +37,7 @@
                             <th scope="row">{{ object.google_id }}</th>
                             <td>{{ object.order_number }}</td>
                             <td>{{ object.price_us }}</td>
+                            <td>{{ object.price_ru }}</td>
                             <td>{{ object.will_arrive }}</td>
                         </tr>
                     {% endfor %}
