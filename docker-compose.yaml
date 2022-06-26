@@ -31,3 +31,13 @@ services:
       DJANGO_SETTINGS_MODULE: sheetgrabber.settings.prod
     depends_on:
       - db
+
+  celery:
+    build:
+      context: ./app
+    command: celery -A sheetgrabber worker -l info
+    environment:
+      DJANGO_SETTINGS_MODULE: sheetgrabber.settings.prod
+    depends_on:
+      - redis
+      - web
