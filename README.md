@@ -2,17 +2,23 @@
 
 ## Запуск
 
-### Запуск проекта
+### 1. Запуск контейнеров
 ```
 docker-compose up --build
 ```
 
-### Создать админа
-при запущенном docker-compose
+### 2. Создать админа
+при запущенном docker-compose.
 ```
 python app/manage.py createsuperuser --settings=sheetgrabber.settings.debug_ext
 ```
 
+### 3. Создать периодическую задачу в админке
+Здесь будет скрин
+1. Сздать новую задачу Periodic tasks
+2. Придумать название
+3. Вызывать задачу grabber.tasks.get_sheet
+4. Установить интервал срабатывания
 
 ### =====
 Google sheet

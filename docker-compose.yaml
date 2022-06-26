@@ -41,3 +41,13 @@ services:
     depends_on:
       - redis
       - web
+
+  celery-beat:
+    build:
+      context: ./app
+    command: celery -A sheetgrabber beat -l info
+    environment:
+      DJANGO_SETTINGS_MODULE: sheetgrabber.settings.prod
+    depends_on:
+      - redis
+      - web
