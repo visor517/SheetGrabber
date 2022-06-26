@@ -1,7 +1,10 @@
 from celery import shared_task
+from datetime import datetime
 from googleapiclient.discovery import build
 import httplib2
 from oauth2client.service_account import ServiceAccountCredentials
+
+from .models import Order
 
 
 CREDENTIALS_FILE = './google_api_key.json'
@@ -17,10 +20,22 @@ def get_sheet():
     http_auth = credentials.authorize(httplib2.Http())
     service = build('sheets', 'v4', http=http_auth)
 
-    values = service.spreadsheets().values().get(
+    sheet = service.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id,
         range='A1:D10',
         majorDimension='ROWS'
     ).execute()
 
-    return values
+    # строки без названий колонок
+    items = sheet['values'][1:]
+
+    for item in items:
+
+        google_id, order_number, price_us, will_arrive = item
+        Order(
+            google_id=int(google_id),
+            order_number=order_number,
+            price_us=int(price_us),
+            will_arrive=datetime.strptime(will_arrive, '%d.%m.%Y').date(),
+        ).save()
+
