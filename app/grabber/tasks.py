@@ -22,7 +22,7 @@ def get_sheet():
 
     sheet = service.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id,
-        range='A1:D10',
+        range='A1:D199',
         majorDimension='ROWS'
     ).execute()
 
@@ -39,16 +39,19 @@ def get_sheet():
         rate = None
 
     for item in items:
-        google_id, order_number, price_us, will_arrive = item
-        if rate:
-            price_ru = round(float(price_us) * rate, 2)
-        else:
-            price_ru = None
+        try:
+            google_id, order_number, price_us, will_arrive = item
+            if rate:
+                price_ru = round(float(price_us) * rate, 2)
+            else:
+                price_ru = None
 
-        Order(
-            google_id=int(google_id),
-            order_number=order_number,
-            price_us=round(float(price_us), 2),
-            price_ru=price_ru,
-            will_arrive=datetime.strptime(will_arrive, '%d.%m.%Y').date(),
-        ).save()
+            Order(
+                google_id=int(google_id),
+                order_number=order_number,
+                price_us=round(float(price_us), 2),
+                price_ru=price_ru,
+                will_arrive=datetime.strptime(will_arrive, '%d.%m.%Y').date(),
+            ).save()
+        except:
+            pass
