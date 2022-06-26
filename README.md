@@ -14,7 +14,7 @@ python app/manage.py createsuperuser --settings=sheetgrabber.settings.debug_ext
 ```
 
 ### 3. Создать периодическую задачу в админке
-![скриншот](https://disk.yandex.ru/i/ifcoTWOVfy1HEg)
+![скриншот](./001.png)
 1. Создать новую задачу Periodic tasks
 2. Придумать название
 3. Вызывать задачу grabber.tasks.get_sheet
