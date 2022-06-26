@@ -5,7 +5,7 @@ import httplib2
 from oauth2client.service_account import ServiceAccountCredentials
 
 from .models import Order
-
+from .utils.get_rate import get_rate
 
 CREDENTIALS_FILE = './google_api_key.json'
 spreadsheet_id = '1mx8zoY2IGLzVVWw-yYnxtuHW0ejE7QYV8neu39rmsME'
@@ -32,12 +32,23 @@ def get_sheet():
     # очистим таблицу
     Order.objects.all().delete()
 
+    # получим курс
+    try:
+        rate = get_rate()
+    except:
+        rate = None
+
     for item in items:
         google_id, order_number, price_us, will_arrive = item
+        if rate:
+            price_ru = round(float(price_us) * rate, 2)
+        else:
+            price_ru = None
+
         Order(
             google_id=int(google_id),
             order_number=order_number,
-            price_us=int(price_us),
+            price_us=round(float(price_us), 2),
+            price_ru=price_ru,
             will_arrive=datetime.strptime(will_arrive, '%d.%m.%Y').date(),
         ).save()
-
