@@ -31,11 +31,15 @@
                 <tbody>
                     {% for object in object_list %}
                         <tr>
-                            <th scope="row">{{ object.google_id }}</th>
-                            <td>{{ object.order_number }}</td>
-                            <td>{{ object.price_us }}</td>
-                            <td>{{ object.price_ru }}</td>
-                            <td>{{ object.will_arrive }}</td>
+                            {% if object.is_valid %}
+                                <th scope="row">{{ object.google_id }}</th>
+                                <td>{{ object.order_number }}</td>
+                                <td>{{ object.price_us }}</td>
+                                <td>{{ object.price_ru }}</td>
+                                <td>{{ object.will_arrive }}</td>
+                            {% else %}
+                                <td colspan="5" class="text-warning">Ошибка валидации</td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>

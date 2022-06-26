@@ -38,7 +38,7 @@ def get_sheet():
     except:
         rate = None
 
-    for item in items:
+    for index, item in enumerate(items):
         try:
             google_id, order_number, price_us, will_arrive = item
             if rate:
@@ -47,6 +47,7 @@ def get_sheet():
                 price_ru = None
 
             Order(
+                id=index,
                 google_id=int(google_id),
                 order_number=order_number,
                 price_us=round(float(price_us), 2),
@@ -54,4 +55,7 @@ def get_sheet():
                 will_arrive=datetime.strptime(will_arrive, '%d.%m.%Y').date(),
             ).save()
         except:
-            pass
+            Order(
+                id=index,
+                is_valid=False,
+            ).save()
