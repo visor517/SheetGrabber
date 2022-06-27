@@ -27,15 +27,17 @@ function App() {
     else setSortSettings({sortBy: keyName, isIncrease: true})
   }
 
-  useEffect(() => {
+  function getData() {
     axios('http://127.0.0.1:8000/api/orders/')
     .then(
-      res => {
-        setRows(res.data)
-      },
+      res => setRows(res.data),
       err => console.log('Ошибка получения данных')
     )
-  }, [])
+  }
+  // получаем данный при загрузке
+  useEffect(getData, [])
+  // периодическое обновление данны
+  setInterval(getData, 3000)
 
   // обработка данных при изменении фильтра или сортировки
   useEffect(() => {
