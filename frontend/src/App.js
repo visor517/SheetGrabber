@@ -31,7 +31,7 @@ function App() {
     axios('http://127.0.0.1:8000/api/orders/')
     .then(
       res => {
-        setRows(res.data.content)
+        setRows(res.data)
       },
       err => console.log('Ошибка получения данных')
     )
