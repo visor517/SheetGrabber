@@ -41,7 +41,9 @@ function App() {
   useEffect(() => {
     setPreparedRows(
       rows.filter(row =>     // ищем вхождение фильтра в одно из полей
-        Object.values(row).filter(elem => elem.toString().toLowerCase().indexOf(filterText) !== -1).length > 0
+        Object.values(row).filter(elem =>
+            elem != null &&
+            elem.toString().toLowerCase().indexOf(filterText) !== -1).length > 0
       )
       .sort((a, b) => {
         if (sortSettings.isIncrease) {
