@@ -6,4 +6,4 @@ from .models import Order
 class OrderModelSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = ['google_id', 'order_number', 'price_us', 'price_ru', 'will_arrive', 'is_valid']
