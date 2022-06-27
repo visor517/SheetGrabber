@@ -20,13 +20,16 @@ services:
     volumes:
       - .:/var/lib/postgresql/data
 
-  web:
+  backend:
     build:
       context: ./app
-    ports:
-      - "8000:8000"
+    expose:
+      - 8000
 #    command: bash -c "python manage.py migrate && gunicorn sheetgrabber.wsgi -b 0.0.0.0:8000"
-    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000
+      "
     environment:
       DJANGO_SETTINGS_MODULE: sheetgrabber.settings.prod
     depends_on:
@@ -40,7 +43,7 @@ services:
       DJANGO_SETTINGS_MODULE: sheetgrabber.settings.prod
     depends_on:
       - redis
-      - web
+      - backend
 
   celery-beat:
     build:
@@ -50,4 +53,18 @@ services:
       DJANGO_SETTINGS_MODULE: sheetgrabber.settings.prod
     depends_on:
       - redis
-      - web
+      - backend
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 8080:8080
+    depends_on:
+      - backend
+
+  frontend:
+    build: ./frontend
+    ports:
+      - 80:80
+    depends_on:
+      - nginx
