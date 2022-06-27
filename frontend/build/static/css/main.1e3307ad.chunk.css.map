@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/components/ColName/ColName.module.css"],"names":[],"mappings":"AAAA,gCACI,gBACJ,CAEA,iCACI,gBACJ,CAEA,wBACI,cACJ","file":"main.1e3307ad.chunk.css","sourcesContent":[".ascending:after {\n    content: '\\1F817'\n}\n\n.descending:after {\n    content: '\\1F815'\n}\n\n.pointer {\n    cursor: pointer;\n}\n"]}

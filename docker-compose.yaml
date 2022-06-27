@@ -24,11 +24,11 @@ services:
     build:
       context: ./app
     expose:
-      - 8000
+      - 8080
 #    command: bash -c "python manage.py migrate && gunicorn sheetgrabber.wsgi -b 0.0.0.0:8000"
     command: bash -c "
       python manage.py migrate &&
-      python manage.py runserver 0.0.0.0:8000
+      python manage.py runserver 0.0.0.0:8080
       "
     environment:
       DJANGO_SETTINGS_MODULE: sheetgrabber.settings.prod
@@ -58,7 +58,7 @@ services:
   nginx:
     build: ./nginx
     ports:
-      - 8080:8080
+      - 8000:80
     depends_on:
       - backend
 

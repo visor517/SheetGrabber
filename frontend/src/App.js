@@ -28,11 +28,10 @@ function App() {
   }
 
   useEffect(() => {
-    axios('http://db:8000/api/orders/')
+    axios('http://127.0.0.1:8000/api/orders/')
     .then(
       res => {
-        // setRows(res.data.content)
-        console.log(res.data)
+        setRows(res.data.content)
       },
       err => console.log('Ошибка получения данных')
     )
